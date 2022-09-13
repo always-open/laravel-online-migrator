@@ -13,8 +13,6 @@ jobs:
         php: [8.0, 8.1]
         laravel: [8.*, 9.*]
         stability: [prefer-lowest, prefer-stable]
-        include:
-            - laravel: ${{ matrix.laravel }}
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
 
@@ -47,6 +45,8 @@ jobs:
           extensions: pdo, pdo_mysql
           coverage: none
       - name: Composer update
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+        run: |
+            composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+            composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
       - name: Execute tests
         run: vendor/bin/phpunit --testdox --configuration phpunit.xml.github
