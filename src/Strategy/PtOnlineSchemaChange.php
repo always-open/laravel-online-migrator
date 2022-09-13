@@ -161,7 +161,9 @@ final class PtOnlineSchemaChange implements StrategyInterface
         // HACK: Workaround PTOSC quirk with escaping and defaults.
         $changes = str_replace(
             ["default '0'", "default '1'"],
-            ['default 0', 'default 1'], $changes);
+            ['default 0', 'default 1'],
+            $changes,
+        );
 
         // Dropping FKs with PTOSC requires prefixing constraint name with
         // '_'; adding another if it already starts with '_'.
@@ -219,11 +221,14 @@ final class PtOnlineSchemaChange implements StrategyInterface
             '--no-check-unique-key-change',
         ];
         $ptosc_options_str = self::getOptionsForShell(
-            config('online-migrator.ptosc-options'), $ptosc_defaults);
+            config('online-migrator.ptosc-options'),
+            $ptosc_defaults,
+        );
 
         if (false !== strpos($ptosc_options_str, '--dry-run')) {
             throw new \InvalidArgumentException(
-                'Cannot run PTOSC with --dry-run because it would incompletely change the database. Remove from PTOSC_OPTIONS.');
+                'Cannot run PTOSC with --dry-run because it would incompletely change the database. Remove from PTOSC_OPTIONS.',
+            );
         }
 
         $db_config = $connection->getConfig();
@@ -262,7 +267,8 @@ final class PtOnlineSchemaChange implements StrategyInterface
             if (false === strpos($raw_default, '--', 0)) {
                 throw new \InvalidArgumentException(
                     'Only double dashed (full) options supported '
-                    . var_export($raw_default, 1));
+                    . var_export($raw_default, 1),
+                );
             }
             $default_root = preg_replace('/(^--(no-?)?|=.*)/', '', $raw_default);
             $options[$default_root] = $raw_default;
@@ -277,7 +283,8 @@ final class PtOnlineSchemaChange implements StrategyInterface
                 if (false === strpos($raw_option, '--', 0)) {
                     throw new \InvalidArgumentException(
                         'Only double dashed (full) options supported '
-                        . var_export($raw_option, 1));
+                        . var_export($raw_option, 1),
+                    );
                 }
                 $option_root = preg_replace('/(^--(no-?)?|[= ].*)?/', '', $raw_option);
                 $options[$option_root] = $raw_option;
@@ -316,10 +323,12 @@ final class PtOnlineSchemaChange implements StrategyInterface
             passthru($command, $return_var);
 
             if (0 !== $return_var) {
-                throw new \UnexpectedValueException('Exited with error code '
+                throw new \UnexpectedValueException(
+                    'Exited with error code '
                     . var_export($return_var, 1) . ', command:' . PHP_EOL
                     . $query['query'],
-                    intval($return_var));
+                    intval($return_var),
+                );
             }
         } else {
             // Run unchanged query

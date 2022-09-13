@@ -19,7 +19,8 @@ class StrategyTraitTest extends TestCase
         $this->assertEquals(
             'alter table `test_om` add `color` varchar(255) null, ALGORITHM=INPLACE, LOCK=NONE',
             // HACK: Ignore unmodified copies of queries in log.
-            \DB::getQueryLog()[3]['query']);
+            \DB::getQueryLog()[3]['query'],
+        );
 
         $test_row_one = \DB::table('test_om')->where('name', 'one')->first();
         $this->assertNotNull($test_row_one);
