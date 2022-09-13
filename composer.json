@@ -1,13 +1,13 @@
 {
-    "name": "orisintel/laravel-online-migrator",
+    "name": "always-open/laravel-online-migrator",
     "description": "Apply Laravel's database migrations with minimal disruptions using tools like Percona Online Schema Change",
     "keywords": [
-        "orisintel",
+        "always-open",
         "laravel-online-migrator",
         "laravel",
         "migration"
     ],
-    "homepage": "https://github.com/orisintel/laravel-online-migrator",
+    "homepage": "https://github.com/always-open/laravel-online-migrator",
     "license": "MIT",
     "authors": [
     {
@@ -15,15 +15,13 @@
         "role": "Developer"
     },
     {
-        "name": "ORIS Intelligence",
-        "email": "opensource@pricespider.com",
-        "homepage": "https://orisintel.com",
+        "name": "Always Open",
         "role": "Organization"
     }
     ],
     "require": {
-        "php": "^7.3",
-        "laravel/framework": "^8.0"
+        "php": "^8.0.0|^8.1.0",
+        "laravel/framework": "^8.0|^9.0"
     },
     "require-dev": {
         "doctrine/dbal": "^2.8",
@@ -34,18 +32,17 @@
     },
     "autoload": {
         "psr-4": {
-            "OrisIntel\\OnlineMigrator\\": "src"
+            "AlwaysOpen\\OnlineMigrator\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OrisIntel\\OnlineMigrator\\Tests\\": "tests"
+            "AlwaysOpen\\OnlineMigrator\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
@@ -53,7 +50,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "OrisIntel\\OnlineMigrator\\OnlineMigratorServiceProvider"
+                "AlwaysOpen\\OnlineMigrator\\OnlineMigratorServiceProvider"
             ]
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator\Strategy;
+namespace AlwaysOpen\OnlineMigrator\Strategy;
 
 use Illuminate\Database\Connection;
 

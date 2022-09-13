@@ -2,7 +2,7 @@
 
 class CreateFkWithIndex extends \Illuminate\Database\Migrations\Migration
 {
-    use \OrisIntel\OnlineMigrator\CombineIncompatible;
+    use \AlwaysOpen\OnlineMigrator\CombineIncompatible;
 
     public function up()
     {

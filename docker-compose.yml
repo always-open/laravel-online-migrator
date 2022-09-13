@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  app:
+    environment:
+        - DB_CONNECTION=mysql
+        - DB_DATABASE=online_migrator_ci
+        - DB_PASSWORD=root
+        - DB_USERNAME=root
+        - DB_HOST=online-migrator-db
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    image: online-migrator
+    container_name: online-migrator-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - online-migrator
+
+  db:
+      image: mysql/mysql-server:8.0.27
+      container_name: online-migrator-db
+      restart: unless-stopped
+      ports:
+          - "3306:3306"
+      environment:
+          MYSQL_DATABASE: online_migrator_ci
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: dev
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_HOST: '%'
+          SERVICE_TAGS: dev
+          SERVICE_NAME: mysql
+      volumes:
+          - ./docker/mysql:/docker-entrypoint-initdb.d:delegated,ro
+      networks:
+          - online-migrator
+
+networks:
+    online-migrator:
+        driver: bridge

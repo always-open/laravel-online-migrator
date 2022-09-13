@@ -5,15 +5,18 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4]
+        php: [8.0, 8.1]
+        laravel: [8.*, 9.*]
         stability: [prefer-lowest, prefer-stable]
+        include:
+            - laravel: ${{ matrix.laravel }}
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
@@ -35,7 +38,7 @@ jobs:
         run: sudo systemctl start mysql
       - name: Create Mysql DB
         run: mysql --user=root --password=root --host=127.0.0.1 -e 'CREATE DATABASE IF NOT EXISTS online_migrator_ci;'
-      - name: Workaround PHP 7.3 not supporting newer authentication
+      - name: Workaround not supporting newer authentication
         run: mysql --user=root --password=root --host=127.0.0.1 -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

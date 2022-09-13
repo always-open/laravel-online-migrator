@@ -1,6 +1,6 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator;
+namespace AlwaysOpen\OnlineMigrator;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Migrations\Migration;
@@ -123,7 +123,7 @@ class OnlineMigrator extends Migrator
                 $migration->onlineStrategy
                 ?? config('online-migrator.strategy', 'pt-online-schema-change')
             ),
-            '\\OrisIntel\\OnlineMigrator\\Strategy\\'
+            '\\AlwaysOpen\\OnlineMigrator\\Strategy\\'
         );
     }
 

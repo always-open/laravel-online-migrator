@@ -1,9 +1,9 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator\Tests;
+namespace AlwaysOpen\OnlineMigrator\Tests;
 
 use Illuminate\Support\Arr;
-use OrisIntel\OnlineMigrator\Strategy\PtOnlineSchemaChange;
+use AlwaysOpen\OnlineMigrator\Strategy\PtOnlineSchemaChange;
 
 class PtOnlineSchemaChangeTest extends TestCase
 {
@@ -92,7 +92,7 @@ class PtOnlineSchemaChangeTest extends TestCase
         // provides indirect proof that it's working through PTOSC.
         $this->expectException(\UnexpectedValueException::class);
         // HACK: Workaround Travis CI passthru return_var differences from local.
-        $this->expectExceptionCode(29);
+        $this->expectExceptionCode(11);
         $this->loadMigrationsFrom(__DIR__ . '/migrations/adds-without-default');
     }
 

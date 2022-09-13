@@ -1,6 +1,6 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator\Tests;
+namespace AlwaysOpen\OnlineMigrator\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +42,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getPackageProviders($app)
     {
-        return ['\OrisIntel\OnlineMigrator\OnlineMigratorServiceProvider'];
+        return ['\AlwaysOpen\OnlineMigrator\OnlineMigratorServiceProvider'];
     }
 }

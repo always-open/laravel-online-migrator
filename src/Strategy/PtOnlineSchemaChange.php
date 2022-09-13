@@ -6,7 +6,7 @@
  * Time: 3:25 PM.
  */
 
-namespace OrisIntel\OnlineMigrator\Strategy;
+namespace AlwaysOpen\OnlineMigrator\Strategy;
 
 use Illuminate\Database\Connection;
 

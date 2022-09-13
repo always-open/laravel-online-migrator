@@ -2,7 +2,7 @@
 
 class AddColorToTestOmWithOnlineDdl extends \Illuminate\Database\Migrations\Migration
 {
-    use \OrisIntel\OnlineMigrator\InnodbOnlineDdl;
+    use \AlwaysOpen\OnlineMigrator\InnodbOnlineDdl;
 
     public function up()
     {

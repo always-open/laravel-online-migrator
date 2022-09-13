@@ -1,9 +1,9 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator\Tests;
+namespace AlwaysOpen\OnlineMigrator\Tests;
 
 use Illuminate\Support\Arr;
-use OrisIntel\OnlineMigrator\Strategy\InnodbOnlineDdl;
+use AlwaysOpen\OnlineMigrator\Strategy\InnodbOnlineDdl;
 
 class InnodbOnlineDdlTest extends TestCase
 {

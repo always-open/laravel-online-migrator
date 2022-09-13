@@ -1,6 +1,6 @@
 <?php
 
-namespace OrisIntel\OnlineMigrator\Tests;
+namespace AlwaysOpen\OnlineMigrator\Tests;
 
 class StrategyTraitTest extends TestCase
 {

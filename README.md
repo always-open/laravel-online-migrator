@@ -1,8 +1,8 @@
 # Laravel Online Migrator
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/orisintel/laravel-online-migrator.svg?style=flat-square)](https://packagist.org/packages/orisintel/laravel-online-migrator)
-[![Build Status](https://img.shields.io/travis/orisintel/laravel-online-migrator/master.svg?style=flat-square)](https://travis-ci.org/orisintel/laravel-online-migrator)
-[![Total Downloads](https://img.shields.io/packagist/dt/orisintel/laravel-online-migrator.svg?style=flat-square)](https://packagist.org/packages/orisintel/laravel-online-migrator)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/always-open/laravel-online-migrator.svg?style=flat-square)](https://packagist.org/packages/always-open/laravel-online-migrator)
+[![Build Status](https://img.shields.io/travis/always-open/laravel-online-migrator/master.svg?style=flat-square)](https://travis-ci.org/always-open/laravel-online-migrator)
+[![Total Downloads](https://img.shields.io/packagist/dt/always-open/laravel-online-migrator.svg?style=flat-square)](https://packagist.org/packages/always-open/laravel-online-migrator)
 
 This package minimizes disruptions when applying Laravel's database migrations
 using tools like [Percona Online Schema Change](https://www.percona.com/doc/percona-toolkit/LATEST/pt-online-schema-change.html)
@@ -16,7 +16,7 @@ PTOSC commands or online DDL queries.
 You can install the package via composer:
 
 ``` bash
-composer require orisintel/laravel-online-migrator
+composer require always-open/laravel-online-migrator
 ```
 
 The `pt-online-schema-change` command from Percona's toolkit must be in the path
@@ -26,14 +26,14 @@ where Artisan will be run, unless InnoDB Online DDL is being used exclusively.
 
 Publish the configuration file:
 ``` bash
-php artisan vendor:publish --provider='OrisIntel\OnlineMigrator\OnlineMigratorServiceProvider'
+php artisan vendor:publish --provider='AlwaysOpen\OnlineMigrator\OnlineMigratorServiceProvider'
 ```
 
 If not using discovery then add the provider to `config/app.php`:
 ``` php
 'providers' => [
     // ...
-    OrisIntel\OnlineMigrator\OnlineMigratorServiceProvider::class,
+    AlwaysOpen\OnlineMigrator\OnlineMigratorServiceProvider::class,
 ```
 
 If changing tables with `enum` columns consider working around "Unknown database
@@ -66,21 +66,21 @@ Flag migrations known to be incompatible with this tool using the built-in trait
 ``` php
 class MyMigration extends Migration
 {
-    use \OrisIntel\OnlineMigrator\OnlineIncompatible
+    use \AlwaysOpen\OnlineMigrator\OnlineIncompatible
 ```
 
 Use a different strategy for a single migration:
 ``` php
 class MyMigration extends Migration
 {
-    use \OrisIntel\OnlineMigrator\InnodbOnlineDdl
+    use \AlwaysOpen\OnlineMigrator\InnodbOnlineDdl
 ```
 
 Do not combine queries for a migration when using PTOSC:
 ``` php
 class MyMigration extends Migration
 {
-    use \OrisIntel\OnlineMigrator\CombineIncompatible
+    use \AlwaysOpen\OnlineMigrator\CombineIncompatible
 ```
 
 Adding foreign key with index to existing table:
