@@ -2,8 +2,8 @@
 
 namespace AlwaysOpen\OnlineMigrator\Tests;
 
-use Illuminate\Support\Arr;
 use AlwaysOpen\OnlineMigrator\Strategy\PtOnlineSchemaChange;
+use Illuminate\Support\Arr;
 
 class PtOnlineSchemaChangeTest extends TestCase
 {
@@ -20,7 +20,8 @@ class PtOnlineSchemaChangeTest extends TestCase
     {
         $this->assertEquals(
             ' --alter-foreign-keys-method=none',
-            PtOnlineSchemaChange::getOptionsForShell('--alter-foreign-keys-method=none', ['--alter-foreign-keys-method=auto']));
+            PtOnlineSchemaChange::getOptionsForShell('--alter-foreign-keys-method=none', ['--alter-foreign-keys-method=auto']),
+        );
     }
 
     public function test_getQueryOrCommand_doesntRewriteTableRename()
@@ -108,10 +109,12 @@ class PtOnlineSchemaChangeTest extends TestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations/creates-fk-with-index');
 
-        $show_create_sql = str_replace('`', '',
+        $show_create_sql = str_replace(
+            '`',
+            '',
             Arr::last(
-                \DB::select('show create table test_om_fk_with_index')
-            )->{"Create Table"}
+                \DB::select('show create table test_om_fk_with_index'),
+            )->{"Create Table"},
         );
 
         // PTOSC will duplicate where native does not because of differences in
@@ -129,10 +132,12 @@ class PtOnlineSchemaChangeTest extends TestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations/creates-index-with-raw-sql');
 
-        $show_create_sql = str_replace('`', '',
+        $show_create_sql = str_replace(
+            '`',
+            '',
             Arr::last(
-                \DB::select('show create table test_om')
-            )->{"Create Table"}
+                \DB::select('show create table test_om'),
+            )->{"Create Table"},
         );
 
         $this->assertStringContainsString('FULLTEXT', $show_create_sql);
@@ -182,10 +187,12 @@ class PtOnlineSchemaChangeTest extends TestCase
         $this->loadMigrationsFrom(__DIR__ . '/migrations/creates-index-with-raw-sql');
         $this->loadMigrationsFrom(__DIR__ . '/migrations/drops-index-with-raw-sql');
 
-        $show_create_sql = str_replace('`', '',
+        $show_create_sql = str_replace(
+            '`',
+            '',
             Arr::last(
-                \DB::select('show create table test_om')
-            )->{"Create Table"}
+                \DB::select('show create table test_om'),
+            )->{"Create Table"},
         );
 
         $this->assertStringNotContainsString('FULLTEXT', $show_create_sql);

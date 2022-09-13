@@ -113,7 +113,7 @@ final class InnodbOnlineDdl implements StrategyInterface
 
         return preg_match(
             '/\b(' . implode('|', static::INPLACE_INCOMPATIBLE) . ')\b/imu',
-            $query_str
+            $query_str,
         ) ? false : true;
     }
 

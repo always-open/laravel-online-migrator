@@ -2,8 +2,8 @@
 
 namespace AlwaysOpen\OnlineMigrator\Tests;
 
-use Illuminate\Support\Arr;
 use AlwaysOpen\OnlineMigrator\Strategy\InnodbOnlineDdl;
+use Illuminate\Support\Arr;
 
 class InnodbOnlineDdlTest extends TestCase
 {
@@ -28,7 +28,7 @@ class InnodbOnlineDdlTest extends TestCase
         ];
         $this->assertStringEndsWith(
             ', ALGORITHM=COPY, LOCK=SHARED',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
     }
 
@@ -41,7 +41,7 @@ class InnodbOnlineDdlTest extends TestCase
         ];
         $this->assertStringEndsWith(
             ', ALGORITHM=INPLACE, LOCK=NONE',
-            InnodbOnlineDdl::getQueryOrCommand($query, $connection)
+            InnodbOnlineDdl::getQueryOrCommand($query, $connection),
         );
     }
 
@@ -52,7 +52,7 @@ class InnodbOnlineDdlTest extends TestCase
         ];
         $this->assertStringEndsWith(
             ', ALGORITHM=COPY, LOCK=SHARED',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
     }
 
@@ -63,7 +63,7 @@ class InnodbOnlineDdlTest extends TestCase
         ];
         $this->assertStringEndsWith(
             ', ALGORITHM=INPLACE, LOCK=NONE',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
     }
 
@@ -72,13 +72,13 @@ class InnodbOnlineDdlTest extends TestCase
         $query = ['query' => 'DROP INDEX idx ON test_om algorithm=INPLACE'];
         $this->assertEquals(
             'DROP INDEX idx ON test_om algorithm=INPLACE LOCK=NONE',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
 
         $query = ['query' => 'ALTER TABLE test_om ADD c, algorithm=COPY'];
         $this->assertEquals(
             'ALTER TABLE test_om ADD c, algorithm=COPY, LOCK=SHARED',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
     }
 
@@ -88,7 +88,7 @@ class InnodbOnlineDdlTest extends TestCase
 
         $this->assertStringEndsWith(
             ' ALGORITHM=INPLACE LOCK=NONE',
-            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection())
+            InnodbOnlineDdl::getQueryOrCommand($query, \DB::connection()),
         );
     }
 
@@ -100,7 +100,8 @@ class InnodbOnlineDdlTest extends TestCase
             'alter table `test_om` add `color` varchar(255) null, ALGORITHM=INPLACE, LOCK=NONE',
             // HACK: Ignore unmodified copies of queries in log.
             // CONSIDER: Fixing implementation to avoid dupes in query log.
-            \DB::getQueryLog()[3]['query']);
+            \DB::getQueryLog()[3]['query'],
+        );
 
         $test_row_one = \DB::table('test_om')->where('name', 'one')->first();
         $this->assertNotNull($test_row_one);
@@ -124,7 +125,8 @@ class InnodbOnlineDdlTest extends TestCase
         $this->assertEquals(
             'alter table `test_om` add unique `test_om_name_unique`(`name`), ALGORITHM=INPLACE, LOCK=NONE',
             // HACK: Ignore unmodified copies of queries in log.
-            \DB::getQueryLog()[2]['query']);
+            \DB::getQueryLog()[2]['query'],
+        );
 
         $this->expectException(\PDOException::class);
         $this->expectExceptionCode(23000);
@@ -138,7 +140,8 @@ class InnodbOnlineDdlTest extends TestCase
         $this->assertEquals(
             'alter table `test_om` add `without_default` varchar(255) not null, ALGORITHM=INPLACE, LOCK=NONE',
             // HACK: Ignore unmodified copies of queries in log.
-            \DB::getQueryLog()[3]['query']);
+            \DB::getQueryLog()[3]['query'],
+        );
 
         $this->assertEquals('column added', \DB::table('test_om')->first()->without_default ?? null);
     }
@@ -147,9 +150,11 @@ class InnodbOnlineDdlTest extends TestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations/changes-type');
 
-        $this->assertStringEndsWith(', ALGORITHM=COPY, LOCK=SHARED',
+        $this->assertStringEndsWith(
+            ', ALGORITHM=COPY, LOCK=SHARED',
             // HACK: Ignore unmodified copies of queries in log.
-            \DB::getQueryLog()[3]['query']);
+            \DB::getQueryLog()[3]['query'],
+        );
 
         $expanded_name = \DB::table('test_om')->where('id', 1)->value('name');
         $this->assertEquals(65535, mb_strlen($expanded_name));
@@ -159,10 +164,12 @@ class InnodbOnlineDdlTest extends TestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations/creates-fk-with-index');
 
-        $show_create_sql = str_replace('`', '',
+        $show_create_sql = str_replace(
+            '`',
+            '',
             Arr::last(
-                \DB::select('show create table test_om_fk_with_index')
-            )->{"Create Table"}
+                \DB::select('show create table test_om_fk_with_index'),
+            )->{"Create Table"},
         );
 
         preg_match_all('~^\s+KEY\s+([^\s]+)~mu', $show_create_sql, $m);
@@ -176,9 +183,11 @@ class InnodbOnlineDdlTest extends TestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations/creates-index-with-raw-sql');
 
-        $this->assertStringEndsWith(' ALGORITHM=INPLACE LOCK=SHARED',
+        $this->assertStringEndsWith(
+            ' ALGORITHM=INPLACE LOCK=SHARED',
             // HACK: Ignore unmodified copies of queries in log.
-            \DB::getQueryLog()[2]['query']);
+            \DB::getQueryLog()[2]['query'],
+        );
     }
 
     public function test_migrate_createsTableWithPrimary()

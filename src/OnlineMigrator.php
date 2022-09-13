@@ -33,7 +33,7 @@ class OnlineMigrator extends Migrator
     {
         // BEGIN: Copied from parent.
         $db = $this->resolveConnection(
-            $connection = $migration->getConnection()
+            $connection = $migration->getConnection(),
         );
         // END: Copied from parent.
 
@@ -47,7 +47,8 @@ class OnlineMigrator extends Migrator
 
         if ('mysql' !== $db->getDriverName()) {
             throw new \InvalidArgumentException(
-                'Database driver unsupported: ' . var_export($db->getDriverName(), 1));
+                'Database driver unsupported: ' . var_export($db->getDriverName(), 1),
+            );
         }
 
         // BEGIN: Copied from parent.
@@ -75,7 +76,7 @@ class OnlineMigrator extends Migrator
     {
         // BEGIN: Copied from parent.
         $connection = $this->resolveConnection(
-            $migration->getConnection()
+            $migration->getConnection(),
         );
         // END: Copied from parent.
 
@@ -121,9 +122,9 @@ class OnlineMigrator extends Migrator
         return Str::start(
             Str::studly(
                 $migration->onlineStrategy
-                ?? config('online-migrator.strategy', 'pt-online-schema-change')
+                ?? config('online-migrator.strategy', 'pt-online-schema-change'),
             ),
-            '\\AlwaysOpen\\OnlineMigrator\\Strategy\\'
+            '\\AlwaysOpen\\OnlineMigrator\\Strategy\\',
         );
     }
 
