@@ -92,7 +92,7 @@ class PtOnlineSchemaChangeTest extends TestCase
         // provides indirect proof that it's working through PTOSC.
         $this->expectException(\UnexpectedValueException::class);
         // HACK: Workaround Travis CI passthru return_var differences from local.
-        $this->expectExceptionCode(11);
+        $this->expectExceptionCode(29);
         $this->loadMigrationsFrom(__DIR__ . '/migrations/adds-without-default');
     }
 
